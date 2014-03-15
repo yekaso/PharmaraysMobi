@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="6dip" >
+
+    <CheckBox
+        android:id="@+id/pharmacyCheckBox"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:focusable="false"
+        android:focusableInTouchMode="false"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        android:text="@string/checkBoxString"
+        android:textColor="@color/checkBoxColor" />
+<LinearLayout 
+     android:orientation="vertical"
+            android:layout_width="match_parent"
+             android:layout_height="wrap_content"
+            android:gravity="left"
+            android:layout_below="@+id/pharmacyCheckBox"
+        >
+        <TextView
+        android:id="@+id/pharmacy_contactdetails"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/pharmacy_contactdetails_title"
+        android:textColor="@color/button_color_blue" 
+        android:textSize="8sp"/>
+    <TextView
+        android:id="@+id/pharmacy_address"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/sample_address"
+        android:textColor="@color/drugDetailColor" 
+        android:textSize="14sp"
+        android:layout_marginLeft="10dip"/>
+    <TextView
+        android:id="@+id/pharmacy_email"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/sample_email"
+        android:textColor="@color/drugDetailColor" 
+        android:textSize="14sp"
+        android:layout_marginLeft="10dip"/>
+    <TextView
+        android:id="@+id/pharmacy_mobile"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/sample_phone"
+        android:textColor="@color/drugDetailColor"
+        android:textSize="14sp"
+        android:layout_marginLeft="10dip" />
+</LinearLayout>
+</RelativeLayout>

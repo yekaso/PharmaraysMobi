@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="loading_progress_message">Loading...</string>
+    <string name="drug_view_title">Select drugs available at </string>
+    <string name="add_drugs_to_pharmacy">Update Drugs In Pharmacy</string>
+    <color name="checkBoxColor">#B40404</color>
+    <color name="drugDetailColor">#ff000000</color>
+    <string name="checkBoxString">checkbox</string>
+    <string name="drugDetailString">textview</string>
+    <color name="drugListColor">#ffeeeeee</color>
+    <string name="buttonFontSize">18dp</string>
+    <string name="drugTitleFontSize">15dp</string>
+    <color name="color_black">#000000</color>
+    <string name="successful_update">Drug(s) in pharmacy shelf updated</string>
+    <string name="sample_brands">Vita Tab, Forte, Iron Capsule, Chemiron</string>
+    <string name="sample_manufacturers">By Emzor, Pfizer, May &amp; Baker</string>
+    <string name="brand_title">Contained in ...</string>
+    <string name="manufacturer_title">Produced by...</string>
+    
+</resources>

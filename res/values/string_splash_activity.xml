@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="copyright">Copyright @ 2014 www.pharmarays.com</string>
+    <string name="title_activity_splash">Pharmarays</string>
+    <color name="footer_color">#f9f9f9</color>
+</resources>

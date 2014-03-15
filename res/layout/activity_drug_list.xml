@@ -1,0 +1,96 @@
+
+<merge xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".LoginActivity" >
+    <!-- Loading progress -->
+
+    <LinearLayout
+        android:id="@+id/loading_status"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:gravity="center_horizontal"
+        android:orientation="vertical"
+        android:visibility="gone" >
+
+        <ProgressBar
+            style="?android:attr/progressBarStyleLarge"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp" />
+
+        <TextView
+            android:id="@+id/loading_status_message"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
+            android:fontFamily="sans-serif-light"
+            android:text="@string/loading_progress_message"
+            android:textAppearance="?android:attr/textAppearanceMedium" />
+       </LinearLayout>
+
+    <!-- List form -->
+    
+    <LinearLayout
+        android:id="@+id/druglist_form"
+            style="@style/ListFormContainer"
+            android:orientation="vertical"
+            android:gravity="center"
+            android:background="@color/drugListColor" 
+            >
+<LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center" 
+            >
+ <TextView
+        android:id="@+id/drugliststatictext"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/drug_view_title"
+        android:textColor="@color/color_black"
+        android:textSize="17sp" />
+
+ 
+    <TextView
+        android:id="@+id/pharmacy_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/emptyString"
+        android:textColor="@color/color_black"
+        android:textSize="17sp"
+        android:textStyle="bold" />
+    <Button
+        android:id="@+id/findSelected"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/add_drugs_to_pharmacy"
+        android:textColor="@color/button_color_blue"
+        android:textSize="18sp"
+        android:textStyle="bold" />
+    <RelativeLayout 
+     android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+         <TextView
+             android:id="@+id/drugListAlert"
+             android:layout_width="wrap_content"
+             android:layout_height="wrap_content"
+             android:layout_alignParentTop="true"
+             android:layout_centerHorizontal="true"
+             android:text="@string/emptyString"
+             android:textSize="18sp"
+            android:textStyle="bold"
+             android:textColor="@color/button_color_red" />
+
+</RelativeLayout>
+</LinearLayout>
+    <ListView
+        android:id="@+id/drug_list"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent" />
+
+</LinearLayout>
+
+</merge>

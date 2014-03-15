@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="title_activity_register">User Registration</string>
+    <string name="hint_firstname">First Name</string>
+    <string name="hint_lastname">Last Name</string>
+    <string name="hint_emailaddress">Email Address</string>
+    <string name="hint_password">Password</string>
+    <string name="radio_male">Male</string>
+    <string name="radio_female">Female</string>
+    <string name="dob">Choose date of birth...</string>
+    <string name="complete_registration">Complete Registration</string>
+    <string name="selectdob">Date of Birth</string>
+    <string name="userrole_title">I am a...</string>
+    <string-array name="userRoleEntry">
+        <item id="2" >Pharmacy Owner</item>
+        <item id="1">Ordinary User</item>
+    </string-array>
+    <string name="cancel_registration">Cancel</string>
+    <color name="button_color_blue">#027BB3</color>
+    <color name="button_color_white">#ffffff</color>
+    <color name="button_color_green">#093</color>
+    <color name="button_color_red">#dd4b39</color>
+    <string name="error_registration">Error occured while registering user</string>
+    
+</resources>

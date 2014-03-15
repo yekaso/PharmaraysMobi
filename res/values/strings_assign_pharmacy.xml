@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="prompt_search_pharmacy">Search pharmacy</string>
+    <string name="assign_pharmacy">Assign</string>
+    <string name="pharmacy_contactdetails_title">Contact details...</string>
+    <string name="sample_address">7B Raimi Street</string>
+    <string name="sample_email">info@pharmarays.com</string>
+    <string name="sample_phone">08063305711</string>
+    
+</resources>

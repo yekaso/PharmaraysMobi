@@ -1,0 +1,169 @@
+
+<merge xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".RegisterActivity" >
+<!-- Signin progress -->
+
+    <LinearLayout
+        android:id="@+id/signin_status"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:gravity="center_horizontal"
+        android:orientation="vertical"
+        android:visibility="gone" >
+
+        <ProgressBar
+            style="?android:attr/progressBarStyleLarge"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp" />
+
+        <TextView
+            android:id="@+id/signin_status_message"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
+            android:fontFamily="sans-serif-light"
+            android:text="@string/login_progress_signing_in"
+            android:textAppearance="?android:attr/textAppearanceMedium" />
+    </LinearLayout>
+
+    <!-- Sign in form -->
+    
+   <ScrollView
+        android:id="@+id/reg_form"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" 
+        >
+
+        <LinearLayout
+            style="@style/LoginFormContainer"
+            android:orientation="vertical"
+            android:layout_width="match_parent" 
+            > 
+            <EditText
+        android:id="@+id/firstname"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/hint_firstname"
+        android:maxLines="1"
+            android:singleLine="true" >
+
+        <requestFocus />
+    </EditText>
+
+    <EditText
+        android:id="@+id/lastname"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/hint_lastname"
+        android:maxLines="1"
+            android:singleLine="true" />
+
+    <EditText
+        android:id="@+id/emailaddress"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+         android:inputType="textEmailAddress"
+        android:hint="@string/hint_emailaddress"
+        android:maxLines="1"
+            android:singleLine="true" />
+
+    <EditText
+        android:id="@+id/new_userpassword"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/hint_password"
+        android:maxLines="1"
+            android:singleLine="true" />
+
+    <RadioGroup
+        android:id="@+id/genderRadioGroup"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+         android:orientation="horizontal" >
+
+        <RadioButton
+            android:id="@+id/male"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:checked="true"
+            android:text="@string/radio_male" />
+
+        <RadioButton
+            android:id="@+id/female"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/radio_female"
+             />
+
+    </RadioGroup>
+
+    <TextView
+        android:id="@+id/dobValue"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+       android:text="@string/selectdob"
+         />
+
+    <DatePicker
+        android:id="@+id/dobDatePicker"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+      />
+
+    
+
+    <TextView
+        android:id="@+id/userroleTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+            android:text="@string/userrole_title" />
+
+<Spinner
+    android:id="@+id/userroleSelect"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:entries="@array/userRoleEntry" />
+
+        <Button
+            android:id="@+id/completeregistration"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentTop="true"
+            android:text="@string/complete_registration"
+            android:textColor="@color/button_color_green"
+            android:textSize="18sp"
+            android:textStyle="bold" />
+
+<Button
+    android:id="@+id/cancelregistration"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_alignParentRight="true"
+    android:layout_alignParentTop="true"
+    android:text="@string/cancel_registration"
+    android:textColor="@color/button_color_red"
+    android:textSize="18sp"
+    android:textStyle="bold" />
+
+<RelativeLayout 
+     android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+         <TextView
+             android:id="@+id/registerAlert"
+             android:layout_width="wrap_content"
+             android:layout_height="wrap_content"
+             android:layout_alignParentTop="true"
+             android:layout_centerHorizontal="true"
+             android:text="@string/emptyString"
+             android:textSize="18sp"
+            android:textStyle="bold"
+             android:textColor="@color/button_color_red" />
+
+</RelativeLayout>
+</LinearLayout></ScrollView>
+</merge>
