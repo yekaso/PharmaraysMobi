@@ -247,8 +247,8 @@ public class LoginActivity extends Activity {
 						AuthResponseFormat.pharmacyId,
 						AuthResponseFormat.userName);
 				Intent i = new Intent(LoginActivity.this,
-						AssignPharmacyActivity.class);
-				// DrugListActivity.class);
+				// AssignPharmacyActivity.class);
+						DrugListActivity.class);
 				startActivity(i);
 				progressBarUtil.showProgress(false, this.activity);
 				// close this activity
