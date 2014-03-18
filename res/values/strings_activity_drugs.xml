@@ -16,5 +16,6 @@
     <string name="sample_manufacturers">By Emzor, Pfizer, May &amp; Baker</string>
     <string name="brand_title">Contained in ...</string>
     <string name="manufacturer_title">Produced by...</string>
+    <string name="drug_list_activity_title">Drug Inventory</string>
     
 </resources>

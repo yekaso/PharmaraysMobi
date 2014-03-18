@@ -250,7 +250,8 @@ public class LoginActivity extends Activity {
 						AuthResponseFormat.userName,
 						AuthResponseFormat.loginuserroleid);
 				Intent i = null;
-				if (AuthResponseFormat.pharmacyAssignmentStatus == null)
+				if (AuthResponseFormat.pharmacyAssignmentStatus
+						.equalsIgnoreCase("null"))
 					i = new Intent(LoginActivity.this,
 							AssignPharmacyActivity.class);
 				else if (AuthResponseFormat.pharmacyAssignmentStatus
