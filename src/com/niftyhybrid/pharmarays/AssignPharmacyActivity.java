@@ -1,6 +1,7 @@
 package com.niftyhybrid.pharmarays;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import org.apache.http.NameValuePair;
 import org.apache.http.message.BasicNameValuePair;
@@ -15,6 +16,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
@@ -33,8 +35,9 @@ import com.niftyhybrid.pharmarays.utils.TrimmerUtil;
 public class AssignPharmacyActivity extends Activity {
 	private DrugsAdapter dataAdapter = null;
 	private PharmListTask pharmListTask = null;
+	private AssignPharmTask assignPharmTask = null;
 
-	private TextView pharmListAlert, loadingStatusMessageView;
+	private TextView assignPharmAlert, loadingStatusMessageView;
 	private ProgressBarUtil progressBarUtil;
 	private View mSigninFormView;
 	private View mSigninStatusView;
@@ -45,11 +48,11 @@ public class AssignPharmacyActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_assign_pharmacy);
 
-		session = new SessionManager(getApplicationContext());
+		session = new SessionManager(getApplicationContext(), this);
 		mSigninFormView = findViewById(R.id.pharmlist_form);
 		mSigninStatusView = findViewById(R.id.loading_status);
 
-		pharmListAlert = (TextView) findViewById(R.id.assignPharmAlert);
+		assignPharmAlert = (TextView) findViewById(R.id.assignPharmAlert);
 		loadingStatusMessageView = (TextView) findViewById(R.id.loading_status_message);
 
 		progressBarUtil = new ProgressBarUtil();
@@ -60,6 +63,13 @@ public class AssignPharmacyActivity extends Activity {
 		progressBarUtil.setmLoginStatusView(mSigninStatusView);
 
 		displayListView();
+		findViewById(R.id.assignpharmacybutton).setOnClickListener(
+				new View.OnClickListener() {
+					@Override
+					public void onClick(View view) {
+						assignPharmacy();
+					}
+				});
 
 	}
 
@@ -68,6 +78,121 @@ public class AssignPharmacyActivity extends Activity {
 		// Inflate the menu; this adds items to the action bar if it is present.
 		getMenuInflater().inflate(R.menu.assign_pharmacy, menu);
 		return true;
+	}
+
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		switch (item.getItemId()) {
+		case R.id.logout:
+			session.logoutUser();
+			return true;
+		default:
+			return super.onOptionsItemSelected(item);
+		}
+	}
+
+	public void assignPharmacy() {
+		assignPharmAlert.setText("");
+		loadingStatusMessageView.setText(R.string.loading_progress_message);
+		progressBarUtil.showProgress(true, this);
+
+		assignPharmTask = new AssignPharmTask(this);
+		assignPharmTask.execute((Void) null);
+	}
+
+	private ArrayList<NameValuePair> populateNameValuePair(Activity activity) {
+		Log.w("DrugList Activity", "Update the database with the drugs>>>>>");
+
+		ArrayList<Pharmacy> pharmacyList = dataAdapter.pharmList;
+		String createPharmList = "";
+		ArrayList<NameValuePair> nameValuePairs = null;
+		HashMap<String, String> user = session.getUserDetails();
+
+		int createCount = 0;
+		for (Pharmacy pharmacy : pharmacyList) {
+			if (pharmacy.isSelected()) {
+				Log.w("DrugList",
+						"Start doing the drugs magic of CREATE..... :D"
+								+ pharmacy.getName() + " and brandnames >>>>>"
+								+ pharmacy.getEmailAddress());
+				if (createCount == 0)
+					createPharmList = pharmacy.getId().toString();
+				else
+					createPharmList += "," + pharmacy.getId().toString();
+				createCount++;
+				Log.w("DrugList Act", "Displaying the created drugs......"
+						+ createPharmList);
+			}
+
+		}
+		nameValuePairs = new ArrayList<NameValuePair>();
+		Log.w("DrugList Activity",
+				"=======++++++++=======>>>>>>>>The create data||||"
+						+ createPharmList);
+		nameValuePairs.add(new BasicNameValuePair("createdata", createPharmList
+				.trim()));
+		nameValuePairs.add(new BasicNameValuePair("memberid", user
+				.get(session.KEY_MEMBERID)));
+		return nameValuePairs;
+
+	}
+
+	public class AssignPharmTask extends AsyncTask<Void, Void, Boolean> {
+		private Activity activity = null;
+		private JSONArray jArray = null;
+
+		public AssignPharmTask(Activity activity) {
+			this.activity = activity;
+		}
+
+		@Override
+		protected Boolean doInBackground(Void... params) {
+			JSONArray jArray = AppConnector
+					.assignPharmacy(populateNameValuePair(activity));
+			if (jArray != null) {
+				Log.w("Login Activity", "The result has to be displayed here"
+						+ jArray.toString());
+				AuthResponseFormat.formatResponse(jArray);
+				if (AuthResponseFormat.status.equalsIgnoreCase("error"))
+					return false;
+				else
+					return true;
+			} else {
+
+				return null;
+			}
+
+		}
+
+		protected void onPostExecute(final Boolean success) {
+			assignPharmTask = null;
+
+			Log.w("Register Activity",
+					">>>>>>>>>the result of drug list is :::" + success);
+
+			if (success == null) {
+				progressBarUtil.showProgress(false, this.activity);
+				Log.w("Register Activity", getBaseContext().toString());
+				assignPharmAlert.setText(R.string.connection_error);
+			} else if (success) {
+				progressBarUtil.showProgress(false, this.activity);
+				Log.w("Register Activity", getBaseContext().toString());
+				assignPharmAlert.setText(R.string.successful_update);
+				assignPharmAlert.setTextColor(activity.getResources().getColor(
+						R.color.button_color_green));
+			} else {
+				progressBarUtil.showProgress(false, this.activity);
+				Log.w("Register Activity", "Continue please!!!");
+				assignPharmAlert.setText(AuthResponseFormat.message);
+			}
+
+		}
+
+		@Override
+		protected void onCancelled() {
+			assignPharmTask = null;
+			progressBarUtil.showProgress(false, activity);
+		}
 	}
 
 	private void displayListView() {
@@ -121,7 +246,7 @@ public class AssignPharmacyActivity extends Activity {
 			if (success == null) {
 				progressBarUtil.showProgress(false, this.activity);
 				Log.w("Register Activity", getBaseContext().toString());
-				pharmListAlert.setText(R.string.connection_error);
+				assignPharmAlert.setText(R.string.connection_error);
 			} else if (success) {
 				ArrayList<Pharmacy> pharmList = new ArrayList<Pharmacy>();
 				JSONObject jsonData = null;
@@ -156,7 +281,7 @@ public class AssignPharmacyActivity extends Activity {
 			} else {
 				progressBarUtil.showProgress(false, this.activity);
 				Log.w("Register Activity", "Continue please!!!");
-				pharmListAlert.setText(AuthResponseFormat.message);
+				assignPharmAlert.setText(AuthResponseFormat.message);
 			}
 
 		}

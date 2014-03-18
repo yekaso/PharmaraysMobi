@@ -20,9 +20,9 @@ import org.json.JSONException;
 import android.util.Log;
 
 public class AppConnector {
-	// private final static String ipAddress = "192.168.43.212/Pharmarays";
+	private final static String ipAddress = "192.168.1.6/Pharmarays";
 
-	private final static String ipAddress = "www.pharmarays.com";
+	// private final static String ipAddress = "www.pharmarays.com";
 
 	// private final static String ipAddress = "10.0.2.2/Pharmarays";
 
@@ -31,6 +31,13 @@ public class AppConnector {
 
 		return connectToServer(nameValuePairs, url);
 
+	}
+
+	public static JSONArray assignPharmacy(
+			ArrayList<NameValuePair> nameValuePairs) {
+		String url = "/pharma-public/index.php/mobile/mobile_controller/assignpharmacy";
+
+		return connectToServer(nameValuePairs, url);
 	}
 
 	public static JSONArray registerUser(ArrayList<NameValuePair> nameValuePairs) {
@@ -122,7 +129,7 @@ public class AppConnector {
 			is.close();
 			result = sb.toString();
 			Log.w("Login Activity", result);
-			System.out.println("The result is>>>>>>>>>>" + result);
+			// System.out.println("The result is>>>>>>>>>>" + result);
 		} catch (Exception e) {
 			System.out.println("Error converting the result......."
 					+ e.toString());
@@ -133,8 +140,8 @@ public class AppConnector {
 		JSONArray jArray = null;
 
 		try {
-			System.out.println("Preparing to format the JSON==============="
-					+ result);
+			// System.out.println("Preparing to format the JSON==============="+
+			// result);
 			jArray = new JSONArray(result);
 
 		} catch (JSONException e1) {

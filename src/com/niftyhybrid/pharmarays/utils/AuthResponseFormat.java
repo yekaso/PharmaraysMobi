@@ -12,6 +12,8 @@ public class AuthResponseFormat {
 	public static String memberId;
 	public static String userName;
 	public static String pharmacyId;
+	public static String pharmacyAssignmentStatus = null;
+	public static String loginuserroleid;
 
 	public static void formatResponse(JSONArray jArray) {
 		JSONObject jsonData = null;
@@ -52,17 +54,27 @@ public class AuthResponseFormat {
 					memberId = jsonData.getString("memberid");
 				if (userName == null)
 					userName = jsonData.getString("logged_in_user");
+				if (loginuserroleid == null) {
+					loginuserroleid = jsonData.getString("loginuserroleid");
+				}
 				if (rawPharmData == null) {
 					rawPharmData = jsonData.getJSONObject("pharmacydata");
 					if (rawPharmData != null) {
+						Log.w("Login response", "The pharmacy data>>>>>>>>"
+								+ rawPharmData.toString());
 						// pharmJsonData = rawPharmData.getJSONObject(0);
 						pharmacyId = rawPharmData.getString("id");
+						pharmacyAssignmentStatus = rawPharmData
+								.getString("status");
 					}
 				}
 				Log.w("Response Formatter", "================>>>>>>>The " + i
 						+ " iterator for member..." + memberId
 						+ " and userName..." + userName + " and pharmacy id..."
 						+ pharmacyId);
+			}
+			if (rawPharmData == null) {
+
 			}
 		} catch (JSONException e) {
 			Log.w("Login Activity", e.toString());

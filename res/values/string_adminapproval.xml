@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="approval_msg">Your admin rights have not been approved</string>
+    <string name="check_later">Check Later...</string>
+    
+</resources>

@@ -20,6 +20,7 @@ import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.niftyhybrid.pharmarays.data.Constants;
 import com.niftyhybrid.pharmarays.utils.AppConnector;
 import com.niftyhybrid.pharmarays.utils.AuthResponseFormat;
 import com.niftyhybrid.pharmarays.utils.ProgressBarUtil;
@@ -66,7 +67,7 @@ public class LoginActivity extends Activity {
 		super.onCreate(savedInstanceState);
 
 		setContentView(R.layout.activity_login);
-		session = new SessionManager(getApplicationContext());
+		session = new SessionManager(getApplicationContext(), this);
 
 		// the alert field
 		siginAlert = (TextView) findViewById(R.id.siginAlert);
@@ -123,7 +124,8 @@ public class LoginActivity extends Activity {
 	public void attemptRegistration() {
 		System.out.println("Registration attempt made :D");
 		Log.w("Login Activity", "Registration attempt on log file");
-		Intent i = new Intent(LoginActivity.this, RegisterActivity.class);
+		// Intent i = new Intent(LoginActivity.this, RegisterActivity.class);
+		Intent i = new Intent(LoginActivity.this, HomePageActivity.class);
 		startActivity(i);
 
 		// close this activity
@@ -245,10 +247,18 @@ public class LoginActivity extends Activity {
 				session.createPharmacyOwnerLoginSession(
 						AuthResponseFormat.memberId,
 						AuthResponseFormat.pharmacyId,
-						AuthResponseFormat.userName);
-				Intent i = new Intent(LoginActivity.this,
-				// AssignPharmacyActivity.class);
-						DrugListActivity.class);
+						AuthResponseFormat.userName,
+						AuthResponseFormat.loginuserroleid);
+				Intent i = null;
+				if (AuthResponseFormat.pharmacyAssignmentStatus == null)
+					i = new Intent(LoginActivity.this,
+							AssignPharmacyActivity.class);
+				else if (AuthResponseFormat.pharmacyAssignmentStatus
+						.equalsIgnoreCase(Constants.APPROVED))
+					i = new Intent(LoginActivity.this, DrugListActivity.class);
+				else
+					i = new Intent(LoginActivity.this,
+							AdminApprovalActivity.class);
 				startActivity(i);
 				progressBarUtil.showProgress(false, this.activity);
 				// close this activity

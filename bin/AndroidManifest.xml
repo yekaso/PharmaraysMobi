@@ -45,6 +45,14 @@
             android:name="com.niftyhybrid.pharmarays.AssignPharmacyActivity"
             android:label="@string/title_activity_assign_pharmacy" >
         </activity>
+        <activity
+            android:name="com.niftyhybrid.pharmarays.AdminApprovalActivity"
+            android:label="@string/title_activity_admin_approval" >
+        </activity>
+        <activity
+            android:name="com.niftyhybrid.pharmarays.HomePageActivity"
+            android:label="@string/emptyString" >
+        </activity>
     </application>
 
 </manifest>

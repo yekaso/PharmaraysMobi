@@ -16,6 +16,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
@@ -44,7 +45,7 @@ public class DrugListActivity extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_drug_list);
-		session = new SessionManager(getApplicationContext());
+		session = new SessionManager(getApplicationContext(), this);
 		mSigninFormView = findViewById(R.id.druglist_form);
 		mSigninStatusView = findViewById(R.id.loading_status);
 
@@ -79,6 +80,17 @@ public class DrugListActivity extends Activity {
 		// Inflate the menu; this adds items to the action bar if it is present.
 		getMenuInflater().inflate(R.menu.drug_list, menu);
 		return true;
+	}
+
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		switch (item.getItemId()) {
+		case R.id.logout:
+			session.logoutUser();
+			return true;
+		default:
+			return super.onOptionsItemSelected(item);
+		}
 	}
 
 	public void triggerUpdateAvailability() {

@@ -2,6 +2,7 @@ package com.niftyhybrid.pharmarays.utils;
 
 import java.util.HashMap;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -13,15 +14,18 @@ public class SessionManager {
 	SharedPreferences pref;
 	Editor editor;
 	Context newContext;
+	Activity activity;
 	int PRIVATE_MODE = 0;
 	private static final String PREF_NAME = "AndroidHivePref";
 	private static final String IS_LOGIN = "IsLoggedIn";
 	public static final String KEY_MEMBERID = "memberid";
 	public static final String KEY_PHARMACYID = "pharmacyid";
 	public static final String KEY_USERNAME = "membername";
+	public static final String KEY_LOGINUSERROLE = "loginuserroleid";
 
-	public SessionManager(Context context) {
+	public SessionManager(Context context, Activity activity) {
 		this.newContext = context;
+		this.activity = activity;
 		pref = newContext.getSharedPreferences(PREF_NAME, PRIVATE_MODE);
 		editor = pref.edit();
 	}
@@ -34,11 +38,12 @@ public class SessionManager {
 	}
 
 	public void createPharmacyOwnerLoginSession(String memberId,
-			String pharmacyId, String memberName) {
+			String pharmacyId, String memberName, String loginuserroleid) {
 		editor.putBoolean(IS_LOGIN, true);
 		editor.putString(KEY_USERNAME, memberName);
 		editor.putString(KEY_MEMBERID, memberId);
 		editor.putString(KEY_PHARMACYID, pharmacyId);
+		editor.putString(KEY_LOGINUSERROLE, loginuserroleid);
 		editor.commit();
 	}
 
@@ -56,6 +61,7 @@ public class SessionManager {
 		i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 		i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 		newContext.startActivity(i);
+		activity.finish();
 
 	}
 

@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="news_title">News</string>
+    <string name="drug_title">News</string>
+    <string name="forum_title">Forums</string>
+    <string name="pharmacy_title">Community Pharmacy</string>
+    <string name="signup_title">Sign Up</string>
+    <string name="more_title">More...</string>
+    <string name="logout_title">Logout</string>
+    
+</resources>
