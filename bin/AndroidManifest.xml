@@ -13,7 +13,7 @@
     <application
         android:allowBackup="true"
         android:icon="@drawable/ic_launcher"
-        android:label="@string/app_name"
+        android:label="@string/approval_title"
         android:theme="@android:style/Theme.WithActionBar" >
         <activity
             android:name="com.niftyhybrid.pharmarays.SplashActivity"
@@ -31,27 +31,27 @@
         <activity
             android:name="com.niftyhybrid.pharmarays.LoginActivity"
             android:label="@string/title_activity_login"
-            android:windowSoftInputMode="adjustResize|stateVisible" >
+            android:windowSoftInputMode="adjustResize|stateVisible" android:icon="@drawable/signin">
         </activity>
         <activity
             android:name="com.niftyhybrid.pharmarays.RegisterActivity"
-            android:label="@string/title_activity_register" >
+            android:label="@string/title_activity_register" android:icon="@drawable/signup">
         </activity>
         <activity
             android:name="com.niftyhybrid.pharmarays.DrugListActivity"
-            android:label="@string/drug_list_activity_title" >
+            android:label="@string/drug_list_activity_title" android:icon="@drawable/update">
         </activity>
         <activity
             android:name="com.niftyhybrid.pharmarays.AssignPharmacyActivity"
-            android:label="@string/title_activity_assign_pharmacy" >
+            android:label="@string/title_activity_assign_pharmacy" android:icon="@drawable/doctor">
         </activity>
         <activity
             android:name="com.niftyhybrid.pharmarays.AdminApprovalActivity"
-            android:label="@string/title_activity_admin_approval" >
+            android:label="@string/emptyString" android:icon="@drawable/error">
         </activity>
         <activity
             android:name="com.niftyhybrid.pharmarays.HomePageActivity"
-            android:label="@string/emptyString" >
+            android:label="@string/emptyString" android:icon="@drawable/home">
         </activity>
     </application>
 

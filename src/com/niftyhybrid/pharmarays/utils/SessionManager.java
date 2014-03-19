@@ -11,7 +11,7 @@ import android.content.SharedPreferences.Editor;
 import com.niftyhybrid.pharmarays.LoginActivity;
 
 public class SessionManager {
-	SharedPreferences pref;
+	public SharedPreferences pref;
 	Editor editor;
 	Context newContext;
 	Activity activity;

@@ -2,10 +2,8 @@ package com.niftyhybrid.pharmarays;
 
 import android.app.Activity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
 
 import com.niftyhybrid.pharmarays.utils.SessionManager;
 
@@ -15,19 +13,13 @@ public class AdminApprovalActivity extends Activity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		// requestWindowFeature(Window.FEATURE_LEFT_ICON);
 		setContentView(R.layout.activity_admin_approval);
+		// getWindow().setFeatureDrawableResource(Window.FEATURE_LEFT_ICON,
+		// R.drawable.error);
 
 		session = new SessionManager(getApplicationContext(), this);
 
-		findViewById(R.id.logout).setOnClickListener(
-				new View.OnClickListener() {
-					@Override
-					public void onClick(View view) {
-						Log.w("Approval Activity",
-								"Logout Button clicked......");
-						session.logoutUser();
-					}
-				});
 	}
 
 	@Override

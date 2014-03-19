@@ -14,9 +14,9 @@
     <string name="password_hint">Enter your password</string>
     <string name="login_button">Login</string>
     <string name="signup_button"><b>Register</b></string>
-    <string name="title_activity_drug_list">DrugListActivity</string>
-    <string name="title_activity_assign_pharmacy">AssignPharmacyActivity</string>
+    <string name="title_activity_drug_list">Pharmacy Inventory</string>
+    <string name="title_activity_assign_pharmacy">Choose your pharmacy outlet</string>
     <string name="title_activity_admin_approval">AdminApprovalActivity</string>
-    <string name="title_activity_home_page">HomePageActivity</string>
+    <string name="title_activity_home_page"></string>
 
 </resources>

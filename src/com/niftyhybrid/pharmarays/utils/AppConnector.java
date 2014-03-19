@@ -20,7 +20,7 @@ import org.json.JSONException;
 import android.util.Log;
 
 public class AppConnector {
-	private final static String ipAddress = "192.168.1.6/Pharmarays";
+	private final static String ipAddress = "192.168.1.7/Pharmarays";
 
 	// private final static String ipAddress = "www.pharmarays.com";
 

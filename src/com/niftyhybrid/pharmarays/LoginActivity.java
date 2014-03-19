@@ -124,8 +124,8 @@ public class LoginActivity extends Activity {
 	public void attemptRegistration() {
 		System.out.println("Registration attempt made :D");
 		Log.w("Login Activity", "Registration attempt on log file");
-		// Intent i = new Intent(LoginActivity.this, RegisterActivity.class);
-		Intent i = new Intent(LoginActivity.this, HomePageActivity.class);
+		Intent i = new Intent(LoginActivity.this, RegisterActivity.class);
+		// Intent i = new Intent(LoginActivity.this, HomePageActivity.class);
 		startActivity(i);
 
 		// close this activity
@@ -218,7 +218,9 @@ public class LoginActivity extends Activity {
 					return false;
 				else {
 					Log.w("Login Activity",
-							"===========+++++++++========+++++++++========++++++++");
+							"===========+++++++++========+++++++++========++++++++"
+									+ session.pref.getString(
+											session.KEY_MEMBERID, null));
 					AuthResponseFormat.formatLoginResponse(jArray);
 					return true;
 				}

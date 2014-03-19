@@ -7,13 +7,13 @@ import org.json.JSONObject;
 import android.util.Log;
 
 public class AuthResponseFormat {
-	public static String status;
-	public static String message;
-	public static String memberId;
-	public static String userName;
-	public static String pharmacyId;
-	public static String pharmacyAssignmentStatus = null;
-	public static String loginuserroleid;
+	public static String status = "";
+	public static String message = "";
+	public static String memberId = "";
+	public static String userName = "";
+	public static String pharmacyId = "";
+	public static String pharmacyAssignmentStatus = "";
+	public static String loginuserroleid = "";
 
 	public static void formatResponse(JSONArray jArray) {
 		JSONObject jsonData = null;
