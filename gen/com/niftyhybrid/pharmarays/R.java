@@ -202,6 +202,7 @@ public final class R {
         public static final int selectdob=0x7f05003e;
         public static final int signup_button=0x7f050014;
         public static final int signup_title=0x7f050006;
+        public static final int successful_assign_update=0x7f050048;
         public static final int successful_update=0x7f050020;
         public static final int title_activity_admin_approval=0x7f050017;
         public static final int title_activity_assign_pharmacy=0x7f050016;

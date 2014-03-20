@@ -26,6 +26,7 @@ import com.niftyhybrid.pharmarays.utils.AuthResponseFormat;
 import com.niftyhybrid.pharmarays.utils.ProgressBarUtil;
 
 public class RegisterActivity extends Activity {
+	AuthResponseFormat authResponseFormat;
 	private EditText fName, lName, email, password;
 	private Spinner userRole;
 	private DatePicker dateOfBirth;
@@ -47,6 +48,7 @@ public class RegisterActivity extends Activity {
 		password = (EditText) findViewById(R.id.new_userpassword);
 
 		registrationAlert = (TextView) findViewById(R.id.registerAlert);
+		authResponseFormat = new AuthResponseFormat();
 
 		genderGroup = (RadioGroup) findViewById(R.id.genderRadioGroup);
 
@@ -179,8 +181,8 @@ public class RegisterActivity extends Activity {
 				Log.w("Register Activity",
 						"The result has to be displayed here"
 								+ jArray.toString());
-				AuthResponseFormat.formatResponse(jArray);
-				if (AuthResponseFormat.status.equalsIgnoreCase("error"))
+				authResponseFormat.formatResponse(jArray);
+				if (authResponseFormat.status.equalsIgnoreCase("error"))
 					return false;
 				else
 					return true;
@@ -217,7 +219,7 @@ public class RegisterActivity extends Activity {
 			} else {
 				progressBarUtil.showProgress(false, this.activity);
 				Log.w("Register Activity", "Continue please!!!");
-				registrationAlert.setText(AuthResponseFormat.message);
+				registrationAlert.setText(authResponseFormat.message);
 				fName.requestFocus();
 			}
 		}

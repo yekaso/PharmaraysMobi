@@ -74,6 +74,7 @@ public class SessionManager {
 		user.put(KEY_MEMBERID, pref.getString(KEY_MEMBERID, null));
 		user.put(KEY_PHARMACYID, pref.getString(KEY_PHARMACYID, null));
 		user.put(KEY_USERNAME, pref.getString(KEY_USERNAME, null));
+		user.put(KEY_LOGINUSERROLE, pref.getString(KEY_LOGINUSERROLE, null));
 		return user;
 	}
 }

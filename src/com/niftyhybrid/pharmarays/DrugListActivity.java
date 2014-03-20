@@ -1,7 +1,9 @@
 package com.niftyhybrid.pharmarays;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
+import java.util.List;
 
 import org.apache.http.NameValuePair;
 import org.apache.http.message.BasicNameValuePair;
@@ -24,6 +26,7 @@ import android.widget.CheckBox;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.niftyhybrid.pharmarays.comparator.DrugComparator;
 import com.niftyhybrid.pharmarays.data.Drugs;
 import com.niftyhybrid.pharmarays.utils.AppConnector;
 import com.niftyhybrid.pharmarays.utils.AuthResponseFormat;
@@ -32,6 +35,7 @@ import com.niftyhybrid.pharmarays.utils.SessionManager;
 import com.niftyhybrid.pharmarays.utils.TrimmerUtil;
 
 public class DrugListActivity extends Activity {
+	AuthResponseFormat authResponseFormat;
 	private DrugsAdapter dataAdapter = null;
 	private DrugListTask drugListTask = null;
 	private DrugAvailabilityTask drugAvailabilityTask = null;
@@ -48,6 +52,7 @@ public class DrugListActivity extends Activity {
 		session = new SessionManager(getApplicationContext(), this);
 		mSigninFormView = findViewById(R.id.druglist_form);
 		mSigninStatusView = findViewById(R.id.loading_status);
+		authResponseFormat = new AuthResponseFormat();
 
 		drugListAlert = (TextView) findViewById(R.id.drugListAlert);
 		loadingStatusMessageView = (TextView) findViewById(R.id.loading_status_message);
@@ -112,15 +117,23 @@ public class DrugListActivity extends Activity {
 
 	}
 
-	private class DrugsAdapter extends ArrayAdapter<Drugs> {
+	// private class DrugsAdapter extends ArrayAdapter<Drugs> {
+	// private ArrayList<Drugs> drugList;
+	private class DrugsAdapter extends ArrayAdapter<DrugComparator> {
 
-		private ArrayList<Drugs> drugList;
+		private ArrayList<DrugComparator> drugList;
 
-		public DrugsAdapter(Context context, int textViewResourceId,
+		/*
+		 * public DrugsAdapter(Context context, int textViewResourceId,
+		 * 
+		 * ArrayList<Drugs> drugList) { super(context, textViewResourceId,
+		 * drugList); this.drugList = new ArrayList<Drugs>();
+		 * this.drugList.addAll(drugList); }
+		 */public DrugsAdapter(Context context, int textViewResourceId,
 
-		ArrayList<Drugs> drugList) {
+		List<DrugComparator> drugList) {
 			super(context, textViewResourceId, drugList);
-			this.drugList = new ArrayList<Drugs>();
+			this.drugList = new ArrayList<DrugComparator>();
 			this.drugList.addAll(drugList);
 		}
 
@@ -173,7 +186,8 @@ public class DrugListActivity extends Activity {
 				holder = (ViewHolder) convertView.getTag();
 			}
 			drug = new Drugs();
-			drug = drugList.get(position);
+			drug = drugList.get(position).getDrug();
+			// drug = drugList.get(position);
 
 			holder.drugBrands.setText(drug.getBrandNames());
 			holder.drugManufacturers.setText(drug.getDrugManufacturer());
@@ -189,14 +203,22 @@ public class DrugListActivity extends Activity {
 	private ArrayList<NameValuePair> populateNameValuePair(Activity activity) {
 		Log.w("DrugList Activity", "Update the database with the drugs>>>>>");
 
-		ArrayList<Drugs> drugsList = dataAdapter.drugList;
+		// ArrayList<Drugs> drugsList = dataAdapter.drugList;
+		// added
+		ArrayList<DrugComparator> drugsList = dataAdapter.drugList;
 		String createDrugList = "", deleteDrugList = "";
 		ArrayList<NameValuePair> nameValuePairs = null;
 		HashMap<String, String> user = session.getUserDetails();
 
 		int createCount = 0, deleteCount = 0;
-		// Drugs drugs = null;
-		for (Drugs drugs : drugsList) {
+		Drugs drugs = null;
+		// for (Drugs drugs : drugsList) {
+		// added
+		for (DrugComparator drugsComparator : drugsList) {
+			// added
+			drugs = new Drugs();
+			drugs = drugsComparator.getDrug();
+			// stopped
 			if (drugs.isSelected() && drugs.isNotChecked()) {
 				Log.w("DrugList",
 						"Start doing the drugs magic of CREATE..... :D"
@@ -267,8 +289,8 @@ public class DrugListActivity extends Activity {
 			if (jArray != null) {
 				Log.w("Login Activity", "The result has to be displayed here"
 						+ jArray.toString());
-				AuthResponseFormat.formatResponse(jArray);
-				if (AuthResponseFormat.status.equalsIgnoreCase("error"))
+				authResponseFormat.formatResponse(jArray);
+				if (authResponseFormat.status.equalsIgnoreCase("error"))
 					return false;
 				else
 					return true;
@@ -298,7 +320,7 @@ public class DrugListActivity extends Activity {
 			} else {
 				progressBarUtil.showProgress(false, this.activity);
 				Log.w("Register Activity", "Continue please!!!");
-				drugListAlert.setText(AuthResponseFormat.message);
+				drugListAlert.setText(authResponseFormat.message);
 			}
 
 		}
@@ -336,8 +358,8 @@ public class DrugListActivity extends Activity {
 				Log.w("Register Activity",
 						"The result has to be displayed here"
 								+ jArray.toString());
-				AuthResponseFormat.formatResponse(jArray);
-				if (AuthResponseFormat.status.equalsIgnoreCase("error"))
+				authResponseFormat.formatResponse(jArray);
+				if (authResponseFormat.status.equalsIgnoreCase("error"))
 					return false;
 				else
 					return true;
@@ -363,13 +385,15 @@ public class DrugListActivity extends Activity {
 				ArrayList<Drugs> drugList = new ArrayList<Drugs>();
 				JSONObject jsonData = null;
 				Drugs drug = null;
-
+				List<DrugComparator> drugListSort = new ArrayList<DrugComparator>();
+				DrugComparator drugComparator = null;
 				try {
 					jsonData = jArray.getJSONObject(0);
 					jArray = new JSONArray();
 					jArray = jsonData.getJSONArray("drugs");
 					pharmacyName.setText(jsonData.getString("pharmacy"));
 					for (int i = 0; i < jArray.length(); i++) {
+
 						drug = new Drugs();
 						jsonData = jArray.getJSONObject(i);
 						// drug.setName(TrimmerUtil.trim(
@@ -387,13 +411,20 @@ public class DrugListActivity extends Activity {
 						drug.setNotChecked(jsonData.getBoolean("notChecked"));
 						drug.setSelected(!drug.isNotChecked());
 						drugList.add(drug);
+						// for next sorting.....
+						drugComparator = new DrugComparator(drug);
+						drugListSort.add(drugComparator);
 					}
 				} catch (JSONException e) {
 					Log.w("Login Activity", e.toString());
 				}
-				Log.w("Drug Activity=============", drugList.toString());
+
+				Collections.sort(drugListSort);
+				Log.w("Drug Activity=============", drugListSort.toString());
+				// dataAdapter = new DrugsAdapter(activity, R.layout.drug_info,
+				// drugList);
 				dataAdapter = new DrugsAdapter(activity, R.layout.drug_info,
-						drugList);
+						drugListSort);
 				ListView listView = (ListView) findViewById(R.id.drug_list);
 				// Assign adapter to ListView
 				listView.setAdapter(dataAdapter);
@@ -401,7 +432,7 @@ public class DrugListActivity extends Activity {
 			} else {
 				progressBarUtil.showProgress(false, this.activity);
 				Log.w("Register Activity", "Continue please!!!");
-				drugListAlert.setText(AuthResponseFormat.message);
+				drugListAlert.setText(authResponseFormat.message);
 			}
 
 		}

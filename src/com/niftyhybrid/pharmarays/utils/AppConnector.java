@@ -20,7 +20,7 @@ import org.json.JSONException;
 import android.util.Log;
 
 public class AppConnector {
-	private final static String ipAddress = "192.168.1.7/Pharmarays";
+	private final static String ipAddress = "192.168.1.4/Pharmarays";
 
 	// private final static String ipAddress = "www.pharmarays.com";
 
@@ -114,6 +114,7 @@ public class AppConnector {
 	}
 
 	public static JSONArray formatInputStream(InputStream is, StringBuilder sb) {
+		AuthResponseFormat authResponseFormat = new AuthResponseFormat();
 		Log.w("App Connector", "Inside the format input stream.....");
 		String result = "";
 		try {
@@ -150,11 +151,11 @@ public class AppConnector {
 			Log.w("Login Activity", "No food found");
 			System.out.println("No food found.....");
 
-			return AuthResponseFormat.getErrorExecution();
+			return authResponseFormat.getErrorExecution();
 
 		} catch (ParseException e1) {
 			e1.printStackTrace();
-			return AuthResponseFormat.getErrorExecution();
+			return authResponseFormat.getErrorExecution();
 		}
 		return jArray;
 	}

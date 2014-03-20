@@ -53,6 +53,7 @@ public class LoginActivity extends Activity {
 	private String mPassword;
 
 	SessionManager session;
+	AuthResponseFormat authResponseFormat;
 	// UI references.
 	private EditText mEmailView;
 	private TextView siginAlert;
@@ -68,6 +69,7 @@ public class LoginActivity extends Activity {
 
 		setContentView(R.layout.activity_login);
 		session = new SessionManager(getApplicationContext(), this);
+		authResponseFormat = new AuthResponseFormat();
 
 		// the alert field
 		siginAlert = (TextView) findViewById(R.id.siginAlert);
@@ -212,16 +214,16 @@ public class LoginActivity extends Activity {
 			if (jArray != null) {
 				Log.w("Login Activity", "The result has to be displayed here"
 						+ jArray.toString());
-				AuthResponseFormat.formatResponse(jArray);
+				authResponseFormat.formatResponse(jArray);
 
-				if (AuthResponseFormat.status.equalsIgnoreCase("error"))
+				if (authResponseFormat.status.equalsIgnoreCase("error"))
 					return false;
 				else {
 					Log.w("Login Activity",
 							"===========+++++++++========+++++++++========++++++++"
 									+ session.pref.getString(
 											session.KEY_MEMBERID, null));
-					AuthResponseFormat.formatLoginResponse(jArray);
+					authResponseFormat.formatLoginResponse(jArray);
 					return true;
 				}
 			} else {
@@ -243,25 +245,31 @@ public class LoginActivity extends Activity {
 				siginAlert.setText(R.string.connection_error);
 			} else if (success) {
 				Log.w("Login Activity", "It is finished!!!!!>><<<<"
-						+ AuthResponseFormat.memberId + " username id is "
-						+ AuthResponseFormat.userName + " pharmacy id is "
-						+ AuthResponseFormat.pharmacyId);
+						+ authResponseFormat.memberId + " username id is "
+						+ authResponseFormat.userName + " pharmacy id is "
+						+ authResponseFormat.pharmacyId + " and login Role is "
+						+ authResponseFormat.loginuserroleid);
 				session.createPharmacyOwnerLoginSession(
-						AuthResponseFormat.memberId,
-						AuthResponseFormat.pharmacyId,
-						AuthResponseFormat.userName,
-						AuthResponseFormat.loginuserroleid);
+						authResponseFormat.memberId,
+						authResponseFormat.pharmacyId,
+						authResponseFormat.userName,
+						authResponseFormat.loginuserroleid);
 				Intent i = null;
-				if (AuthResponseFormat.pharmacyAssignmentStatus
-						.equalsIgnoreCase("null"))
+				if (authResponseFormat.pharmacyAssignmentStatus == null) {
+					Log.w("Login Activity",
+							"NEXT STAGE IS :::::::: ASSIGN PHARMACY");
 					i = new Intent(LoginActivity.this,
 							AssignPharmacyActivity.class);
-				else if (AuthResponseFormat.pharmacyAssignmentStatus
-						.equalsIgnoreCase(Constants.APPROVED))
+				} else if (authResponseFormat.pharmacyAssignmentStatus
+						.equalsIgnoreCase(Constants.APPROVED)) {
+					Log.w("Login Activity", "NEXT STAGE IS :::::::: DRUG LIST");
 					i = new Intent(LoginActivity.this, DrugListActivity.class);
-				else
+				} else {
+					Log.w("Login Activity",
+							"NEXT STAGE IS :::::::: ADMIN APPROVAL");
 					i = new Intent(LoginActivity.this,
 							AdminApprovalActivity.class);
+				}
 				startActivity(i);
 				progressBarUtil.showProgress(false, this.activity);
 				// close this activity
@@ -269,7 +277,7 @@ public class LoginActivity extends Activity {
 			} else {
 				progressBarUtil.showProgress(false, this.activity);
 				Log.w("Login Activity", "Continue please!!!");
-				siginAlert.setText(AuthResponseFormat.message);
+				siginAlert.setText(authResponseFormat.message);
 				mEmailView.requestFocus();
 			}
 		}

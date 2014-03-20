@@ -6,5 +6,6 @@
     <string name="sample_address">7B Raimi Street</string>
     <string name="sample_email">info@pharmarays.com</string>
     <string name="sample_phone">08063305711</string>
+    <string name="successful_assign_update">Pharmacy outlet assigned successfully!!!</string>
     
 </resources>

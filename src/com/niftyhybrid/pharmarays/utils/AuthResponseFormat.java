@@ -7,15 +7,15 @@ import org.json.JSONObject;
 import android.util.Log;
 
 public class AuthResponseFormat {
-	public static String status = "";
-	public static String message = "";
-	public static String memberId = "";
-	public static String userName = "";
-	public static String pharmacyId = "";
-	public static String pharmacyAssignmentStatus = "";
-	public static String loginuserroleid = "";
+	public String status;
+	public String message;
+	public String memberId;
+	public String userName;
+	public String pharmacyId;
+	public String pharmacyAssignmentStatus;
+	public String loginuserroleid;
 
-	public static void formatResponse(JSONArray jArray) {
+	public void formatResponse(JSONArray jArray) {
 		JSONObject jsonData = null;
 		try {
 			for (int i = 0; i < jArray.length(); i++) {
@@ -31,7 +31,7 @@ public class AuthResponseFormat {
 
 	}
 
-	public static JSONArray getErrorExecution() {
+	public JSONArray getErrorExecution() {
 		JSONArray jArray = new JSONArray();
 
 		JSONObject jData = new JSONObject();
@@ -45,17 +45,24 @@ public class AuthResponseFormat {
 		return jArray;
 	}
 
-	public static void formatLoginResponse(JSONArray jArray) {
+	public void formatLoginResponse(JSONArray jArray) {
 		JSONObject jsonData = null, pharmJsonData = null, rawPharmData = null;
 		try {
 			for (int i = 0; i < jArray.length(); i++) {
 				jsonData = jArray.getJSONObject(i);
 				if (memberId == null)
 					memberId = jsonData.getString("memberid");
+				Log.w("Auth Resp", "The RETRIEVED MEMBER ID IS >>>>>>"
+						+ memberId);
 				if (userName == null)
 					userName = jsonData.getString("logged_in_user");
 				if (loginuserroleid == null) {
 					loginuserroleid = jsonData.getString("loginuserroleid");
+					if (loginuserroleid != null)
+						if (loginuserroleid.equalsIgnoreCase("null"))
+							loginuserroleid = null;
+					Log.w("Auth Resp", "The RETRIEVED LOGINROLEID IS >>>>>>"
+							+ loginuserroleid);
 				}
 				if (rawPharmData == null) {
 					rawPharmData = jsonData.getJSONObject("pharmacydata");

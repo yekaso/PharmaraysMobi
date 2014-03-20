@@ -33,6 +33,7 @@ import com.niftyhybrid.pharmarays.utils.SessionManager;
 import com.niftyhybrid.pharmarays.utils.TrimmerUtil;
 
 public class AssignPharmacyActivity extends Activity {
+	AuthResponseFormat authResponseFormat;
 	private DrugsAdapter dataAdapter = null;
 	private PharmListTask pharmListTask = null;
 	private AssignPharmTask assignPharmTask = null;
@@ -51,6 +52,7 @@ public class AssignPharmacyActivity extends Activity {
 		session = new SessionManager(getApplicationContext(), this);
 		mSigninFormView = findViewById(R.id.pharmlist_form);
 		mSigninStatusView = findViewById(R.id.loading_status);
+		authResponseFormat = new AuthResponseFormat();
 
 		assignPharmAlert = (TextView) findViewById(R.id.assignPharmAlert);
 		loadingStatusMessageView = (TextView) findViewById(R.id.loading_status_message);
@@ -104,35 +106,65 @@ public class AssignPharmacyActivity extends Activity {
 		Log.w("DrugList Activity", "Update the database with the drugs>>>>>");
 
 		ArrayList<Pharmacy> pharmacyList = dataAdapter.pharmList;
-		String createPharmList = "";
+		String createPharmList = "", deletePharmList = "";
 		ArrayList<NameValuePair> nameValuePairs = null;
 		HashMap<String, String> user = session.getUserDetails();
 
-		int createCount = 0;
+		int createCount = 0, deleteCount = 0;
+		// Drugs drugs = null;
 		for (Pharmacy pharmacy : pharmacyList) {
-			if (pharmacy.isSelected()) {
-				Log.w("DrugList",
-						"Start doing the drugs magic of CREATE..... :D"
-								+ pharmacy.getName() + " and brandnames >>>>>"
+			if (pharmacy.isSelected() && pharmacy.isNotChecked()) {
+				Log.w("PharmList",
+						"Start doing the pharmacy magic of CREATE..... :D"
+								+ pharmacy.getName()
+								+ " and email address >>>>>"
 								+ pharmacy.getEmailAddress());
 				if (createCount == 0)
 					createPharmList = pharmacy.getId().toString();
 				else
 					createPharmList += "," + pharmacy.getId().toString();
 				createCount++;
-				Log.w("DrugList Act", "Displaying the created drugs......"
+				Log.w("PharmList Act", "Displaying the created pharmacy......"
 						+ createPharmList);
+
+				// dataAdapter.remove(drugs);
+				pharmacy.setNotChecked(false);
+				// drugsList.set(i, drugs);
+				// dataAdapter.add(drugs);
+
+			} else if (!pharmacy.isSelected() && !pharmacy.isNotChecked()) {
+				Log.w("PharmList",
+						"Start doing the pharmacy magic of DELETE..... :D"
+								+ pharmacy.getName()
+								+ " and email address >>>>>"
+								+ pharmacy.getEmailAddress());
+				if (deleteCount == 0)
+					deletePharmList = pharmacy.getId().toString();
+				else
+					deletePharmList += "," + pharmacy.getId().toString();
+				deleteCount++;
+				Log.w("PharmList Act", "Displaying the deleted pharmacy......"
+						+ deletePharmList);
+				// dataAdapter.remove(drugs);
+				pharmacy.setNotChecked(true);
+				// drugsList.set(i, drugs);
+
+				// dataAdapter.add(drugs);
 			}
 
 		}
+
 		nameValuePairs = new ArrayList<NameValuePair>();
+		String loginRole = user.get(session.KEY_LOGINUSERROLE);
 		Log.w("DrugList Activity",
 				"=======++++++++=======>>>>>>>>The create data||||"
-						+ createPharmList);
+						+ createPharmList + " and login role is " + loginRole);
 		nameValuePairs.add(new BasicNameValuePair("createdata", createPharmList
 				.trim()));
-		nameValuePairs.add(new BasicNameValuePair("memberid", user
-				.get(session.KEY_MEMBERID)));
+		nameValuePairs.add(new BasicNameValuePair("deletedata", deletePharmList
+				.trim()));
+		nameValuePairs
+				.add(new BasicNameValuePair("loginuserroleid", loginRole));
 		return nameValuePairs;
 
 	}
@@ -152,8 +184,8 @@ public class AssignPharmacyActivity extends Activity {
 			if (jArray != null) {
 				Log.w("Login Activity", "The result has to be displayed here"
 						+ jArray.toString());
-				AuthResponseFormat.formatResponse(jArray);
-				if (AuthResponseFormat.status.equalsIgnoreCase("error"))
+				authResponseFormat.formatResponse(jArray);
+				if (authResponseFormat.status.equalsIgnoreCase("error"))
 					return false;
 				else
 					return true;
@@ -177,13 +209,13 @@ public class AssignPharmacyActivity extends Activity {
 			} else if (success) {
 				progressBarUtil.showProgress(false, this.activity);
 				Log.w("Register Activity", getBaseContext().toString());
-				assignPharmAlert.setText(R.string.successful_update);
+				assignPharmAlert.setText(R.string.successful_assign_update);
 				assignPharmAlert.setTextColor(activity.getResources().getColor(
 						R.color.button_color_green));
 			} else {
 				progressBarUtil.showProgress(false, this.activity);
 				Log.w("Register Activity", "Continue please!!!");
-				assignPharmAlert.setText(AuthResponseFormat.message);
+				assignPharmAlert.setText(authResponseFormat.message);
 			}
 
 		}
@@ -225,8 +257,8 @@ public class AssignPharmacyActivity extends Activity {
 				Log.w("Register Activity",
 						"The result has to be displayed here"
 								+ jArray.toString());
-				AuthResponseFormat.formatResponse(jArray);
-				if (AuthResponseFormat.status.equalsIgnoreCase("error"))
+				authResponseFormat.formatResponse(jArray);
+				if (authResponseFormat.status.equalsIgnoreCase("error"))
 					return false;
 				else
 					return true;
@@ -254,7 +286,10 @@ public class AssignPharmacyActivity extends Activity {
 
 				try {
 					jsonData = jArray.getJSONObject(0);
+					jArray = new JSONArray();
+					jArray = jsonData.getJSONArray("pharmacy");
 					for (int i = 0; i < jArray.length(); i++) {
+						Log.w("Assign Pharm", "Iterating............" + i);
 						pharmacy = new Pharmacy();
 						jsonData = jArray.getJSONObject(i);
 						// pharmacy.setName(TrimmerUtil.trim(
@@ -263,7 +298,8 @@ public class AssignPharmacyActivity extends Activity {
 								.getString("name")));
 						pharmacy.setEmailAddress(jsonData.getString("location"));
 						pharmacy.setPhoneNumber(jsonData.getString("telephone"));
-
+						pharmacy.setAddress(jsonData.getString("address"));
+						pharmacy.setNotChecked(true);
 						pharmacy.setId(jsonData.getLong("id"));
 						pharmList.add(pharmacy);
 					}
@@ -281,7 +317,7 @@ public class AssignPharmacyActivity extends Activity {
 			} else {
 				progressBarUtil.showProgress(false, this.activity);
 				Log.w("Register Activity", "Continue please!!!");
-				assignPharmAlert.setText(AuthResponseFormat.message);
+				assignPharmAlert.setText(authResponseFormat.message);
 			}
 
 		}
