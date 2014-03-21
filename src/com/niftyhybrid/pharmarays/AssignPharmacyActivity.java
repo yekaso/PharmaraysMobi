@@ -1,7 +1,9 @@
 package com.niftyhybrid.pharmarays;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
+import java.util.List;
 
 import org.apache.http.NameValuePair;
 import org.apache.http.message.BasicNameValuePair;
@@ -24,6 +26,7 @@ import android.widget.CheckBox;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.niftyhybrid.pharmarays.comparator.PharmacyComparator;
 import com.niftyhybrid.pharmarays.data.Constants;
 import com.niftyhybrid.pharmarays.data.Pharmacy;
 import com.niftyhybrid.pharmarays.utils.AppConnector;
@@ -34,7 +37,7 @@ import com.niftyhybrid.pharmarays.utils.TrimmerUtil;
 
 public class AssignPharmacyActivity extends Activity {
 	AuthResponseFormat authResponseFormat;
-	private DrugsAdapter dataAdapter = null;
+	private PharmacyAdapter dataAdapter = null;
 	private PharmListTask pharmListTask = null;
 	private AssignPharmTask assignPharmTask = null;
 
@@ -105,14 +108,16 @@ public class AssignPharmacyActivity extends Activity {
 	private ArrayList<NameValuePair> populateNameValuePair(Activity activity) {
 		Log.w("DrugList Activity", "Update the database with the drugs>>>>>");
 
-		ArrayList<Pharmacy> pharmacyList = dataAdapter.pharmList;
+		ArrayList<PharmacyComparator> pharmacyList = dataAdapter.pharmList;
 		String createPharmList = "", deletePharmList = "";
 		ArrayList<NameValuePair> nameValuePairs = null;
 		HashMap<String, String> user = session.getUserDetails();
 
 		int createCount = 0, deleteCount = 0;
-		// Drugs drugs = null;
-		for (Pharmacy pharmacy : pharmacyList) {
+		Pharmacy pharmacy = null;
+		for (PharmacyComparator pharmacyComparator : pharmacyList) {
+			pharmacy = new Pharmacy();
+			pharmacy = pharmacyComparator.getPharmacy();
 			if (pharmacy.isSelected() && pharmacy.isNotChecked()) {
 				Log.w("PharmList",
 						"Start doing the pharmacy magic of CREATE..... :D"
@@ -127,10 +132,7 @@ public class AssignPharmacyActivity extends Activity {
 				Log.w("PharmList Act", "Displaying the created pharmacy......"
 						+ createPharmList);
 
-				// dataAdapter.remove(drugs);
 				pharmacy.setNotChecked(false);
-				// drugsList.set(i, drugs);
-				// dataAdapter.add(drugs);
 
 			} else if (!pharmacy.isSelected() && !pharmacy.isNotChecked()) {
 				Log.w("PharmList",
@@ -145,11 +147,7 @@ public class AssignPharmacyActivity extends Activity {
 				deleteCount++;
 				Log.w("PharmList Act", "Displaying the deleted pharmacy......"
 						+ deletePharmList);
-				// dataAdapter.remove(drugs);
 				pharmacy.setNotChecked(true);
-				// drugsList.set(i, drugs);
-
-				// dataAdapter.add(drugs);
 			}
 
 		}
@@ -229,7 +227,6 @@ public class AssignPharmacyActivity extends Activity {
 
 	private void displayListView() {
 
-		// Array list of countries
 		loadingStatusMessageView.setText(R.string.loading_progress_message);
 		progressBarUtil.showProgress(true, this);
 		pharmListTask = new PharmListTask(this);
@@ -283,7 +280,8 @@ public class AssignPharmacyActivity extends Activity {
 				ArrayList<Pharmacy> pharmList = new ArrayList<Pharmacy>();
 				JSONObject jsonData = null;
 				Pharmacy pharmacy = null;
-
+				List<PharmacyComparator> pharmListSort = new ArrayList<PharmacyComparator>();
+				PharmacyComparator pharmacyComparator = null;
 				try {
 					jsonData = jArray.getJSONObject(0);
 					jArray = new JSONArray();
@@ -292,8 +290,6 @@ public class AssignPharmacyActivity extends Activity {
 						Log.w("Assign Pharm", "Iterating............" + i);
 						pharmacy = new Pharmacy();
 						jsonData = jArray.getJSONObject(i);
-						// pharmacy.setName(TrimmerUtil.trim(
-						// jsonData.getString("drug_name"), 10, true));
 						pharmacy.setName(TrimmerUtil.capitalize(jsonData
 								.getString("name")));
 						pharmacy.setEmailAddress(jsonData.getString("location"));
@@ -302,14 +298,17 @@ public class AssignPharmacyActivity extends Activity {
 						pharmacy.setNotChecked(true);
 						pharmacy.setId(jsonData.getLong("id"));
 						pharmList.add(pharmacy);
+
+						pharmacyComparator = new PharmacyComparator(pharmacy);
+						pharmListSort.add(pharmacyComparator);
 					}
 				} catch (JSONException e) {
 					Log.w("Login Activity", e.toString());
 				}
-				Log.w("PHarm List Activity=======<<<<<<<<<>>>>>>>>>======",
-						pharmList.toString());
-				dataAdapter = new DrugsAdapter(activity, R.layout.pharm_info,
-						pharmList);
+				Collections.sort(pharmListSort);
+				Log.w("Drug Activity=============", pharmListSort.toString());
+				dataAdapter = new PharmacyAdapter(activity,
+						R.layout.pharm_info, pharmListSort);
 				ListView listView = (ListView) findViewById(R.id.pharmacy_list);
 				// Assign adapter to ListView
 				listView.setAdapter(dataAdapter);
@@ -329,15 +328,15 @@ public class AssignPharmacyActivity extends Activity {
 		}
 	}
 
-	private class DrugsAdapter extends ArrayAdapter<Pharmacy> {
+	private class PharmacyAdapter extends ArrayAdapter<PharmacyComparator> {
 
-		private ArrayList<Pharmacy> pharmList;
+		private ArrayList<PharmacyComparator> pharmList;
 
-		public DrugsAdapter(Context context, int textViewResourceId,
+		public PharmacyAdapter(Context context, int textViewResourceId,
 
-		ArrayList<Pharmacy> pharmList) {
+		List<PharmacyComparator> pharmList) {
 			super(context, textViewResourceId, pharmList);
-			this.pharmList = new ArrayList<Pharmacy>();
+			this.pharmList = new ArrayList<PharmacyComparator>();
 			this.pharmList.addAll(pharmList);
 		}
 
@@ -392,7 +391,7 @@ public class AssignPharmacyActivity extends Activity {
 				holder = (ViewHolder) convertView.getTag();
 			}
 			pharmacy = new Pharmacy();
-			pharmacy = pharmList.get(position);
+			pharmacy = pharmList.get(position).getPharmacy();
 
 			holder.pharmAddress.setText(pharmacy.getAddress());
 			holder.pharmEmail.setText(pharmacy.getEmailAddress());

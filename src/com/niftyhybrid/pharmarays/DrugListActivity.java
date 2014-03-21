@@ -109,7 +109,6 @@ public class DrugListActivity extends Activity {
 
 	private void displayListView() {
 
-		// Array list of countries
 		loadingStatusMessageView.setText(R.string.loading_progress_message);
 		progressBarUtil.showProgress(true, this);
 		drugListTask = new DrugListTask(this);
@@ -117,19 +116,11 @@ public class DrugListActivity extends Activity {
 
 	}
 
-	// private class DrugsAdapter extends ArrayAdapter<Drugs> {
-	// private ArrayList<Drugs> drugList;
 	private class DrugsAdapter extends ArrayAdapter<DrugComparator> {
 
 		private ArrayList<DrugComparator> drugList;
 
-		/*
-		 * public DrugsAdapter(Context context, int textViewResourceId,
-		 * 
-		 * ArrayList<Drugs> drugList) { super(context, textViewResourceId,
-		 * drugList); this.drugList = new ArrayList<Drugs>();
-		 * this.drugList.addAll(drugList); }
-		 */public DrugsAdapter(Context context, int textViewResourceId,
+		public DrugsAdapter(Context context, int textViewResourceId,
 
 		List<DrugComparator> drugList) {
 			super(context, textViewResourceId, drugList);
@@ -187,7 +178,6 @@ public class DrugListActivity extends Activity {
 			}
 			drug = new Drugs();
 			drug = drugList.get(position).getDrug();
-			// drug = drugList.get(position);
 
 			holder.drugBrands.setText(drug.getBrandNames());
 			holder.drugManufacturers.setText(drug.getDrugManufacturer());
@@ -203,8 +193,6 @@ public class DrugListActivity extends Activity {
 	private ArrayList<NameValuePair> populateNameValuePair(Activity activity) {
 		Log.w("DrugList Activity", "Update the database with the drugs>>>>>");
 
-		// ArrayList<Drugs> drugsList = dataAdapter.drugList;
-		// added
 		ArrayList<DrugComparator> drugsList = dataAdapter.drugList;
 		String createDrugList = "", deleteDrugList = "";
 		ArrayList<NameValuePair> nameValuePairs = null;
@@ -212,13 +200,9 @@ public class DrugListActivity extends Activity {
 
 		int createCount = 0, deleteCount = 0;
 		Drugs drugs = null;
-		// for (Drugs drugs : drugsList) {
-		// added
 		for (DrugComparator drugsComparator : drugsList) {
-			// added
 			drugs = new Drugs();
 			drugs = drugsComparator.getDrug();
-			// stopped
 			if (drugs.isSelected() && drugs.isNotChecked()) {
 				Log.w("DrugList",
 						"Start doing the drugs magic of CREATE..... :D"
@@ -231,10 +215,7 @@ public class DrugListActivity extends Activity {
 				createCount++;
 				Log.w("DrugList Act", "Displaying the created drugs......"
 						+ createDrugList);
-				// dataAdapter.remove(drugs);
 				drugs.setNotChecked(false);
-				// drugsList.set(i, drugs);
-				// dataAdapter.add(drugs);
 
 			} else if (!drugs.isSelected() && !drugs.isNotChecked()) {
 				Log.w("DrugList",
@@ -248,15 +229,10 @@ public class DrugListActivity extends Activity {
 				deleteCount++;
 				Log.w("DrugList Act", "Displaying the deleted drugs......"
 						+ deleteDrugList);
-				// dataAdapter.remove(drugs);
 				drugs.setNotChecked(true);
-				// drugsList.set(i, drugs);
-
-				// dataAdapter.add(drugs);
 			}
 
 		}
-		// dataAdapter.
 
 		nameValuePairs = new ArrayList<NameValuePair>();
 		Log.w("DrugList Activity",
@@ -396,8 +372,6 @@ public class DrugListActivity extends Activity {
 
 						drug = new Drugs();
 						jsonData = jArray.getJSONObject(i);
-						// drug.setName(TrimmerUtil.trim(
-						// jsonData.getString("drug_name"), 10, true));
 						drug.setName(TrimmerUtil.capitalize(jsonData
 								.getString("drug_name")));
 						drug.setBrandNames(jsonData
@@ -411,7 +385,6 @@ public class DrugListActivity extends Activity {
 						drug.setNotChecked(jsonData.getBoolean("notChecked"));
 						drug.setSelected(!drug.isNotChecked());
 						drugList.add(drug);
-						// for next sorting.....
 						drugComparator = new DrugComparator(drug);
 						drugListSort.add(drugComparator);
 					}
@@ -421,12 +394,9 @@ public class DrugListActivity extends Activity {
 
 				Collections.sort(drugListSort);
 				Log.w("Drug Activity=============", drugListSort.toString());
-				// dataAdapter = new DrugsAdapter(activity, R.layout.drug_info,
-				// drugList);
 				dataAdapter = new DrugsAdapter(activity, R.layout.drug_info,
 						drugListSort);
 				ListView listView = (ListView) findViewById(R.id.drug_list);
-				// Assign adapter to ListView
 				listView.setAdapter(dataAdapter);
 				progressBarUtil.showProgress(false, this.activity);
 			} else {
