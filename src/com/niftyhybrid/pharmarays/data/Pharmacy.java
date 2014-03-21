@@ -7,7 +7,7 @@ public class Pharmacy {
 	private String address;
 	private String phoneNumber;
 	private boolean selected;
-	private boolean notChecked;
+	private boolean checked;
 
 	public Long getId() {
 		return id;
@@ -57,12 +57,12 @@ public class Pharmacy {
 		this.selected = selected;
 	}
 
-	public boolean isNotChecked() {
-		return notChecked;
+	public boolean isChecked() {
+		return checked;
 	}
 
-	public void setNotChecked(boolean notChecked) {
-		this.notChecked = notChecked;
+	public void setChecked(boolean checked) {
+		this.checked = checked;
 	}
 
 }

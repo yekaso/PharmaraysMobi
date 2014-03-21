@@ -51,6 +51,7 @@ public class LoginActivity extends Activity {
 	// Values for email and password at the time of the login attempt.
 	private String mEmail;
 	private String mPassword;
+	private String selectedUserType = "";
 
 	SessionManager session;
 	AuthResponseFormat authResponseFormat;
@@ -244,31 +245,41 @@ public class LoginActivity extends Activity {
 				Log.w("Login Activity", getBaseContext().toString());
 				siginAlert.setText(R.string.connection_error);
 			} else if (success) {
-				Log.w("Login Activity", "It is finished!!!!!>><<<<"
-						+ authResponseFormat.memberId + " username id is "
-						+ authResponseFormat.userName + " pharmacy id is "
-						+ authResponseFormat.pharmacyId + " and login Role is "
-						+ authResponseFormat.loginuserroleid);
-				session.createPharmacyOwnerLoginSession(
-						authResponseFormat.memberId,
-						authResponseFormat.pharmacyId,
-						authResponseFormat.userName,
-						authResponseFormat.loginuserroleid);
 				Intent i = null;
-				if (authResponseFormat.pharmacyAssignmentStatus == null) {
-					Log.w("Login Activity",
-							"NEXT STAGE IS :::::::: ASSIGN PHARMACY");
-					i = new Intent(LoginActivity.this,
-							AssignPharmacyActivity.class);
-				} else if (authResponseFormat.pharmacyAssignmentStatus
-						.equalsIgnoreCase(Constants.APPROVED)) {
-					Log.w("Login Activity", "NEXT STAGE IS :::::::: DRUG LIST");
-					i = new Intent(LoginActivity.this, DrugListActivity.class);
+				selectedUserType = authResponseFormat.memberTypeName == null ? ""
+						: authResponseFormat.memberTypeName;
+				if (selectedUserType.equalsIgnoreCase("pharmacy owner")) {
+					Log.w("Login Activity", "It is finished!!!!!>><<<<"
+							+ authResponseFormat.memberId + " username id is "
+							+ authResponseFormat.userName + " pharmacy id is "
+							+ authResponseFormat.pharmacyId
+							+ " and login Role is "
+							+ authResponseFormat.loginuserroleid);
+					session.createPharmacyOwnerLoginSession(
+							authResponseFormat.memberId,
+							authResponseFormat.pharmacyId,
+							authResponseFormat.userName,
+							authResponseFormat.loginuserroleid);
+
+					if (authResponseFormat.pharmacyAssignmentStatus == null) {
+						Log.w("Login Activity",
+								"NEXT STAGE IS :::::::: ASSIGN PHARMACY");
+						i = new Intent(LoginActivity.this,
+								AssignPharmacyActivity.class);
+					} else if (authResponseFormat.pharmacyAssignmentStatus
+							.equalsIgnoreCase(Constants.APPROVED)) {
+						Log.w("Login Activity",
+								"NEXT STAGE IS :::::::: DRUG LIST");
+						i = new Intent(LoginActivity.this,
+								DrugListActivity.class);
+					} else {
+						Log.w("Login Activity",
+								"NEXT STAGE IS :::::::: ADMIN APPROVAL");
+						i = new Intent(LoginActivity.this,
+								AdminApprovalActivity.class);
+					}
 				} else {
-					Log.w("Login Activity",
-							"NEXT STAGE IS :::::::: ADMIN APPROVAL");
-					i = new Intent(LoginActivity.this,
-							AdminApprovalActivity.class);
+					i = new Intent(LoginActivity.this, MainActivity.class);
 				}
 				startActivity(i);
 				progressBarUtil.showProgress(false, this.activity);

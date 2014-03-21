@@ -21,5 +21,6 @@
     <color name="button_color_green">#093</color>
     <color name="button_color_red">#dd4b39</color>
     <string name="error_registration">Error occured while registering user</string>
+    <string name="registration_status">Registering user...</string>
     
 </resources>

@@ -118,7 +118,7 @@ public class AssignPharmacyActivity extends Activity {
 		for (PharmacyComparator pharmacyComparator : pharmacyList) {
 			pharmacy = new Pharmacy();
 			pharmacy = pharmacyComparator.getPharmacy();
-			if (pharmacy.isSelected() && pharmacy.isNotChecked()) {
+			if (pharmacy.isSelected() && !pharmacy.isChecked()) {
 				Log.w("PharmList",
 						"Start doing the pharmacy magic of CREATE..... :D"
 								+ pharmacy.getName()
@@ -132,9 +132,9 @@ public class AssignPharmacyActivity extends Activity {
 				Log.w("PharmList Act", "Displaying the created pharmacy......"
 						+ createPharmList);
 
-				pharmacy.setNotChecked(false);
+				pharmacy.setChecked(true);
 
-			} else if (!pharmacy.isSelected() && !pharmacy.isNotChecked()) {
+			} else if (!pharmacy.isSelected() && pharmacy.isChecked()) {
 				Log.w("PharmList",
 						"Start doing the pharmacy magic of DELETE..... :D"
 								+ pharmacy.getName()
@@ -147,7 +147,7 @@ public class AssignPharmacyActivity extends Activity {
 				deleteCount++;
 				Log.w("PharmList Act", "Displaying the deleted pharmacy......"
 						+ deletePharmList);
-				pharmacy.setNotChecked(true);
+				pharmacy.setChecked(false);
 			}
 
 		}
@@ -156,7 +156,8 @@ public class AssignPharmacyActivity extends Activity {
 		String loginRole = user.get(session.KEY_LOGINUSERROLE);
 		Log.w("DrugList Activity",
 				"=======++++++++=======>>>>>>>>The create data||||"
-						+ createPharmList + " and login role is " + loginRole);
+						+ createPharmList + " The delete dat |||||||"
+						+ deletePharmList + " and login role is " + loginRole);
 		nameValuePairs.add(new BasicNameValuePair("createdata", createPharmList
 				.trim()));
 		nameValuePairs.add(new BasicNameValuePair("deletedata", deletePharmList
@@ -295,7 +296,7 @@ public class AssignPharmacyActivity extends Activity {
 						pharmacy.setEmailAddress(jsonData.getString("location"));
 						pharmacy.setPhoneNumber(jsonData.getString("telephone"));
 						pharmacy.setAddress(jsonData.getString("address"));
-						pharmacy.setNotChecked(true);
+						// pharmacy.setChecked(true);
 						pharmacy.setId(jsonData.getLong("id"));
 						pharmList.add(pharmacy);
 
@@ -383,7 +384,7 @@ public class AssignPharmacyActivity extends Activity {
 								"The pharms selected state >>>>"
 										+ pharms.isSelected()
 										+ "<<<The pharms not checked>>>>>>"
-										+ pharms.isNotChecked());
+										+ pharms.isChecked());
 					}
 				});
 

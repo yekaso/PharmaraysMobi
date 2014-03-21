@@ -37,6 +37,7 @@ public class RegisterActivity extends Activity {
 	private View mSigninFormView;
 	private View mSigninStatusView;
 	private TextView registrationAlert, signinStatusMsgView;
+	private String selectedUserType = "";
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -132,7 +133,7 @@ public class RegisterActivity extends Activity {
 		} else {
 			// Show a progress spinner, and kick off a background task to
 			// perform the user login attempt.
-			signinStatusMsgView.setText(R.string.login_progress_signing_in);
+			signinStatusMsgView.setText(R.string.registration_status);
 			progressBarUtil.showProgress(true, this);
 			regTask = new RegistrationTask(this);
 			regTask.execute((Void) null);
@@ -167,9 +168,9 @@ public class RegisterActivity extends Activity {
 			nameValuePairs.add(new BasicNameValuePair("gender", (String) gender
 					.getText()));
 			;
-
+			selectedUserType = (String) userRole.getSelectedItem();
 			nameValuePairs.add(new BasicNameValuePair("member_type",
-					((String) userRole.getSelectedItem())));
+					selectedUserType));
 			nameValuePairs.add(new BasicNameValuePair("date_of_birth",
 					dateOfBirth.getDayOfMonth() + "-" + dateOfBirth.getMonth()
 							+ "-" + dateOfBirth.getYear()));
@@ -208,8 +209,13 @@ public class RegisterActivity extends Activity {
 				Log.w("Register Activity", "It is finished!!!!!");
 
 				Log.w("Register Activity", "Registration attempt on completed");
-				Intent i = new Intent(RegisterActivity.this,
-						DrugListActivity.class);
+				Intent i = null;
+				if (selectedUserType.equalsIgnoreCase("pharmacy owner")) {
+					i = new Intent(RegisterActivity.this,
+							DrugListActivity.class);
+				} else {
+					i = new Intent(RegisterActivity.this, MainActivity.class);
+				}
 				startActivity(i);
 
 				// close this activity

@@ -154,7 +154,7 @@ public final class R {
         public static final int app_name=0x7f05000b;
         public static final int approval_msg=0x7f050000;
         public static final int approval_title=0x7f050001;
-        public static final int assign_pharmacy=0x7f050043;
+        public static final int assign_pharmacy=0x7f050044;
         public static final int brand_title=0x7f050023;
         public static final int buttonFontSize=0x7f05001e;
         public static final int calc=0x7f050010;
@@ -194,24 +194,25 @@ public final class R {
         public static final int more_title=0x7f050007;
         public static final int news_title=0x7f050002;
         public static final int password_hint=0x7f050012;
-        public static final int pharmacy_contactdetails_title=0x7f050044;
+        public static final int pharmacy_contactdetails_title=0x7f050045;
         public static final int pharmacy_title=0x7f050005;
         /**  Strings related to login 
          */
         public static final int prompt_email=0x7f050027;
         public static final int prompt_password=0x7f050028;
-        public static final int prompt_search_pharmacy=0x7f050042;
+        public static final int prompt_search_pharmacy=0x7f050043;
         public static final int radio_female=0x7f05003b;
         public static final int radio_male=0x7f05003a;
-        public static final int sample_address=0x7f050045;
+        public static final int registration_status=0x7f050042;
+        public static final int sample_address=0x7f050046;
         public static final int sample_brands=0x7f050021;
-        public static final int sample_email=0x7f050046;
+        public static final int sample_email=0x7f050047;
         public static final int sample_manufacturers=0x7f050022;
-        public static final int sample_phone=0x7f050047;
+        public static final int sample_phone=0x7f050048;
         public static final int selectdob=0x7f05003e;
         public static final int signup_button=0x7f050014;
         public static final int signup_title=0x7f050006;
-        public static final int successful_assign_update=0x7f050048;
+        public static final int successful_assign_update=0x7f050049;
         public static final int successful_update=0x7f050020;
         public static final int title_activity_admin_approval=0x7f050017;
         public static final int title_activity_assign_pharmacy=0x7f050016;

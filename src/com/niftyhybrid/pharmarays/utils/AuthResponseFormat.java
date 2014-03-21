@@ -14,6 +14,7 @@ public class AuthResponseFormat {
 	public String pharmacyId;
 	public String pharmacyAssignmentStatus;
 	public String loginuserroleid;
+	public String memberTypeName;
 
 	public void formatResponse(JSONArray jArray) {
 		JSONObject jsonData = null;
@@ -56,6 +57,8 @@ public class AuthResponseFormat {
 						+ memberId);
 				if (userName == null)
 					userName = jsonData.getString("logged_in_user");
+				if (memberTypeName == null)
+					memberTypeName = jsonData.getString("membertypename");
 				if (loginuserroleid == null) {
 					loginuserroleid = jsonData.getString("loginuserroleid");
 					if (loginuserroleid != null)
