@@ -9,6 +9,7 @@ import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 
 import com.niftyhybrid.pharmarays.LoginActivity;
+import com.niftyhybrid.pharmarays.data.LoggedInPharmacy;
 
 public class SessionManager {
 	public SharedPreferences pref;
@@ -22,6 +23,11 @@ public class SessionManager {
 	public static final String KEY_PHARMACYID = "pharmacyid";
 	public static final String KEY_USERNAME = "membername";
 	public static final String KEY_LOGINUSERROLE = "loginuserroleid";
+
+	public static final String KEY_PHARMNAME = "pharmname";
+	public static final String KEY_PHARMADDRESS = "pharmaddress";
+	public static final String KEY_PHARMEMAIL = "pharmemail";
+	public static final String KEY_PHARMPHONE = "pharmphone";
 
 	public SessionManager(Context context, Activity activity) {
 		this.newContext = context;
@@ -37,13 +43,19 @@ public class SessionManager {
 		editor.commit();
 	}
 
-	public void createPharmacyOwnerLoginSession(String memberId,
-			String pharmacyId, String memberName, String loginuserroleid) {
+	public void createPharmacyOwnerLoginSession(
+			LoggedInPharmacy loggedInPharmacy) {
 		editor.putBoolean(IS_LOGIN, true);
-		editor.putString(KEY_USERNAME, memberName);
-		editor.putString(KEY_MEMBERID, memberId);
-		editor.putString(KEY_PHARMACYID, pharmacyId);
-		editor.putString(KEY_LOGINUSERROLE, loginuserroleid);
+		editor.putString(KEY_USERNAME, loggedInPharmacy.getMemberName());
+		editor.putString(KEY_MEMBERID, loggedInPharmacy.getMemberId());
+		editor.putString(KEY_PHARMACYID, loggedInPharmacy.getPharmacyId());
+		editor.putString(KEY_LOGINUSERROLE,
+				loggedInPharmacy.getLoginUserRoleId());
+		editor.putString(KEY_PHARMNAME, loggedInPharmacy.getPharmacyName());
+		editor.putString(KEY_PHARMADDRESS,
+				loggedInPharmacy.getPharmacyAddress());
+		editor.putString(KEY_PHARMEMAIL, loggedInPharmacy.getPharmacyEmail());
+		editor.putString(KEY_PHARMPHONE, loggedInPharmacy.getPharmacyPhone());
 		editor.commit();
 	}
 
@@ -75,6 +87,16 @@ public class SessionManager {
 		user.put(KEY_PHARMACYID, pref.getString(KEY_PHARMACYID, null));
 		user.put(KEY_USERNAME, pref.getString(KEY_USERNAME, null));
 		user.put(KEY_LOGINUSERROLE, pref.getString(KEY_LOGINUSERROLE, null));
+		return user;
+	}
+
+	public HashMap<String, String> getPharmacyDetails() {
+		HashMap<String, String> user = new HashMap<String, String>();
+		user.put(KEY_PHARMNAME, pref.getString(KEY_PHARMNAME, null));
+		user.put(KEY_PHARMADDRESS, pref.getString(KEY_PHARMADDRESS, null));
+		user.put(KEY_PHARMEMAIL, pref.getString(KEY_PHARMEMAIL, null));
+		user.put(KEY_PHARMPHONE, pref.getString(KEY_PHARMPHONE, null));
+		user.put(KEY_PHARMACYID, pref.getString(KEY_PHARMACYID, null));
 		return user;
 	}
 }

@@ -23,7 +23,7 @@ public class MainActivity extends Activity {
 
 		session = new SessionManager(getApplicationContext(), this);
 
-		text = (EditText) findViewById(R.id.firstname);
+		text = (EditText) findViewById(R.id.pharmacyname);
 		final Button button = (Button) findViewById(R.id.signupbutton);
 		button.setOnClickListener(new View.OnClickListener() {
 			public void onClick(View view) {

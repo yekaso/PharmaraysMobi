@@ -9,6 +9,8 @@
         android:targetSdkVersion="18" />
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
 
     <application
         android:allowBackup="true"
@@ -30,28 +32,38 @@
         </activity>
         <activity
             android:name="com.niftyhybrid.pharmarays.LoginActivity"
+            android:icon="@drawable/signin"
             android:label="@string/title_activity_login"
-            android:windowSoftInputMode="adjustResize|stateVisible" android:icon="@drawable/signin">
+            android:windowSoftInputMode="adjustResize|stateVisible" >
         </activity>
         <activity
             android:name="com.niftyhybrid.pharmarays.RegisterActivity"
-            android:label="@string/title_activity_register" android:icon="@drawable/signup">
+            android:icon="@drawable/signup"
+            android:label="@string/title_activity_register" >
         </activity>
         <activity
             android:name="com.niftyhybrid.pharmarays.DrugListActivity"
-            android:label="@string/drug_list_activity_title" android:icon="@drawable/update">
+            android:icon="@drawable/update"
+            android:label="@string/drug_list_activity_title" >
         </activity>
         <activity
             android:name="com.niftyhybrid.pharmarays.AssignPharmacyActivity"
-            android:label="@string/title_activity_assign_pharmacy" android:icon="@drawable/doctor">
+            android:icon="@drawable/doctor"
+            android:label="@string/title_activity_assign_pharmacy" >
         </activity>
         <activity
             android:name="com.niftyhybrid.pharmarays.AdminApprovalActivity"
-            android:label="@string/emptyString" android:icon="@drawable/error">
+            android:icon="@drawable/error"
+            android:label="@string/emptyString" >
         </activity>
         <activity
             android:name="com.niftyhybrid.pharmarays.HomePageActivity"
-            android:label="@string/emptyString" android:icon="@drawable/home">
+            android:icon="@drawable/home"
+            android:label="@string/emptyString" >
+        </activity>
+        <activity
+            android:name="com.niftyhybrid.pharmarays.EditPharmActivity"
+            android:label="@string/editpharmtitle" android:icon="@drawable/signup">
         </activity>
     </application>
 

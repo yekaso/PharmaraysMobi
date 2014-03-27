@@ -6,7 +6,7 @@
     android:padding="6dip" >
 
     <CheckBox
-        android:id="@+id/pharmacyCheckBox"
+        android:id="@+id/pharmacylocation"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
@@ -21,7 +21,7 @@
             android:layout_width="match_parent"
              android:layout_height="wrap_content"
             android:gravity="left"
-            android:layout_below="@+id/pharmacyCheckBox"
+            android:layout_below="@+id/pharmacylocation"
         >
         <TextView
         android:id="@+id/pharmacy_contactdetails"

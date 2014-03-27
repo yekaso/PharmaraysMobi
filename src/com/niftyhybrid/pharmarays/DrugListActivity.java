@@ -11,8 +11,10 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
@@ -23,6 +25,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.CheckBox;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -54,6 +57,8 @@ public class DrugListActivity extends Activity {
 		mSigninStatusView = findViewById(R.id.loading_status);
 		authResponseFormat = new AuthResponseFormat();
 
+		final Activity activity = this;
+
 		drugListAlert = (TextView) findViewById(R.id.drugListAlert);
 		loadingStatusMessageView = (TextView) findViewById(R.id.loading_status_message);
 		Log.w("Drug List Activity", "The component in contention is:::::"
@@ -76,6 +81,17 @@ public class DrugListActivity extends Activity {
 						triggerUpdateAvailability();
 					}
 				});
+		final LinearLayout pharmnameborder = (LinearLayout) findViewById(R.id.pharmnameborder);
+		pharmnameborder.setOnClickListener(new View.OnClickListener() {
+
+			@SuppressLint("NewApi")
+			@Override
+			public void onClick(View view) {
+				pharmnameborder.setBackground(activity.getResources()
+						.getDrawable(R.drawable.pressed));
+				editPharmDetailsActivity();
+			}
+		});
 
 		displayListView();
 	}
@@ -96,6 +112,11 @@ public class DrugListActivity extends Activity {
 		default:
 			return super.onOptionsItemSelected(item);
 		}
+	}
+
+	public void editPharmDetailsActivity() {
+		Intent i = new Intent(DrugListActivity.this, EditPharmActivity.class);
+		startActivity(i);
 	}
 
 	public void triggerUpdateAvailability() {

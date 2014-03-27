@@ -249,17 +249,12 @@ public class LoginActivity extends Activity {
 				selectedUserType = authResponseFormat.memberTypeName == null ? ""
 						: authResponseFormat.memberTypeName;
 				if (selectedUserType.equalsIgnoreCase("pharmacy owner")) {
-					Log.w("Login Activity", "It is finished!!!!!>><<<<"
-							+ authResponseFormat.memberId + " username id is "
-							+ authResponseFormat.userName + " pharmacy id is "
-							+ authResponseFormat.pharmacyId
-							+ " and login Role is "
-							+ authResponseFormat.loginuserroleid);
-					session.createPharmacyOwnerLoginSession(
-							authResponseFormat.memberId,
-							authResponseFormat.pharmacyId,
-							authResponseFormat.userName,
-							authResponseFormat.loginuserroleid);
+					Log.w("Login Activity",
+							"It is finished!!!!!>>================<<<<"
+									+ authResponseFormat.loggedInPharmacy
+											.toString());
+
+					session.createPharmacyOwnerLoginSession(authResponseFormat.loggedInPharmacy);
 
 					if (authResponseFormat.pharmacyAssignmentStatus == null) {
 						Log.w("Login Activity",

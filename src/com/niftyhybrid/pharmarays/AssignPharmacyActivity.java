@@ -367,7 +367,7 @@ public class AssignPharmacyActivity extends Activity {
 				holder.pharmNumber = (TextView) convertView
 						.findViewById(R.id.pharmacy_mobile);
 				holder.name = (CheckBox) convertView
-						.findViewById(R.id.pharmacyCheckBox);
+						.findViewById(R.id.pharmacylocation);
 
 				convertView.setTag(holder);
 

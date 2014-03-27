@@ -24,6 +24,7 @@ import android.widget.TextView;
 import com.niftyhybrid.pharmarays.utils.AppConnector;
 import com.niftyhybrid.pharmarays.utils.AuthResponseFormat;
 import com.niftyhybrid.pharmarays.utils.ProgressBarUtil;
+import com.niftyhybrid.pharmarays.utils.SessionManager;
 
 public class RegisterActivity extends Activity {
 	AuthResponseFormat authResponseFormat;
@@ -38,18 +39,20 @@ public class RegisterActivity extends Activity {
 	private View mSigninStatusView;
 	private TextView registrationAlert, signinStatusMsgView;
 	private String selectedUserType = "";
+	SessionManager session;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_register);
-		fName = (EditText) findViewById(R.id.firstname);
-		lName = (EditText) findViewById(R.id.lastname);
-		email = (EditText) findViewById(R.id.emailaddress);
+		fName = (EditText) findViewById(R.id.pharmacyname);
+		lName = (EditText) findViewById(R.id.pharmacymobile);
+		email = (EditText) findViewById(R.id.pharmacyemail);
 		password = (EditText) findViewById(R.id.new_userpassword);
 
 		registrationAlert = (TextView) findViewById(R.id.registerAlert);
 		authResponseFormat = new AuthResponseFormat();
+		session = new SessionManager(getApplicationContext(), this);
 
 		genderGroup = (RadioGroup) findViewById(R.id.genderRadioGroup);
 
@@ -65,7 +68,7 @@ public class RegisterActivity extends Activity {
 		progressBarUtil.setmLoginFormView(mSigninFormView);
 		progressBarUtil.setmLoginStatusView(mSigninStatusView);
 
-		signinStatusMsgView = (TextView) findViewById(R.id.signin_status_message);
+		signinStatusMsgView = (TextView) findViewById(R.id.register_status_message);
 
 		findViewById(R.id.completeregistration).setOnClickListener(
 				new View.OnClickListener() {
@@ -100,7 +103,7 @@ public class RegisterActivity extends Activity {
 		startActivity(i);
 
 		// close this activity
-		// finish();
+		finish();
 	}
 
 	public void concludeRegistration() {
@@ -185,8 +188,10 @@ public class RegisterActivity extends Activity {
 				authResponseFormat.formatResponse(jArray);
 				if (authResponseFormat.status.equalsIgnoreCase("error"))
 					return false;
-				else
+				else {
+					authResponseFormat.formatRegistrationResponse(jArray);
 					return true;
+				}
 			} else {
 
 				return null;
@@ -208,11 +213,14 @@ public class RegisterActivity extends Activity {
 			} else if (success) {
 				Log.w("Register Activity", "It is finished!!!!!");
 
-				Log.w("Register Activity", "Registration attempt on completed");
+				Log.w("Register Activity",
+						"Registration attempt on completed>>>>>"
+								+ authResponseFormat.loginuserroleid);
 				Intent i = null;
 				if (selectedUserType.equalsIgnoreCase("pharmacy owner")) {
+					session.createPharmacyOwnerLoginSession(authResponseFormat.loggedInPharmacy);
 					i = new Intent(RegisterActivity.this,
-							DrugListActivity.class);
+							AssignPharmacyActivity.class);
 				} else {
 					i = new Intent(RegisterActivity.this, MainActivity.class);
 				}

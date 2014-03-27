@@ -17,5 +17,7 @@
     <string name="brand_title">Contained in ...</string>
     <string name="manufacturer_title">Produced by...</string>
     <string name="drug_list_activity_title">Drug Inventory</string>
+    <color name="color_normal_gray">#808080</color>
+    <color name="color_onpress_gray">#c0c0c0</color>
     
 </resources>

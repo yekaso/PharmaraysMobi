@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="pharmacyname">Name of pharmacy</string>
+    <string name="pharmacyaddress">Pharmacy address</string>
+    <string name="pharmacyemail">Contact email address</string>
+    <string name="pharmacymobile">Contact phone number</string>
+    <string name="currentlocation">Are you currently at the pharmacy location?</string>
+    <string name="updatepharm">Update Info</string>
+    <string name="editpharmtitle">Update Pharmacy Information</string>
+    <string name="update_status">Updating...</string>
+    <string name="pharm_update_success">Pharmacy details updated!!!</string>
+    
+</resources>

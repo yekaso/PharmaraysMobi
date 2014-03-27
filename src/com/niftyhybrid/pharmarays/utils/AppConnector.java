@@ -20,7 +20,7 @@ import org.json.JSONException;
 import android.util.Log;
 
 public class AppConnector {
-	private final static String ipAddress = "192.168.1.3/Pharmarays";
+	private final static String ipAddress = "192.168.1.4/Pharmarays";
 
 	// private final static String ipAddress = "www.pharmarays.com";
 
@@ -28,6 +28,13 @@ public class AppConnector {
 
 	public static JSONArray login(ArrayList<NameValuePair> nameValuePairs) {
 		String url = "/pharma-public/index.php/mobile/mobile_controller/loginauthorization";
+
+		return connectToServer(nameValuePairs, url);
+
+	}
+
+	public static JSONArray updatePharm(ArrayList<NameValuePair> nameValuePairs) {
+		String url = "/pharma-public/index.php/mobile/mobile_controller/updatepharm";
 
 		return connectToServer(nameValuePairs, url);
 

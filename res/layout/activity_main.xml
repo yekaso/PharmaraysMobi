@@ -10,7 +10,7 @@
     tools:context=".MainActivity" >
 
     <EditText
-        android:id="@+id/firstname"
+        android:id="@+id/pharmacyname"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
@@ -26,8 +26,8 @@
         android:id="@+id/radioGroup1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/firstname"
-        android:layout_below="@+id/firstname" >
+        android:layout_alignLeft="@+id/pharmacyname"
+        android:layout_below="@+id/pharmacyname" >
 
         <RadioButton
             android:id="@+id/male"

@@ -18,5 +18,6 @@
     <string name="title_activity_assign_pharmacy">Choose your pharmacy outlet</string>
     <string name="title_activity_admin_approval">AdminApprovalActivity</string>
     <string name="title_activity_home_page"></string>
+    <string name="title_activity_edit_pharm">EditPharmActivity</string>
 
 </resources>

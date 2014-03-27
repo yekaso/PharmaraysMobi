@@ -1,0 +1,121 @@
+<merge xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".EditPharmActivity" >
+<!-- Signin progress -->
+
+    <LinearLayout
+        android:id="@+id/progress_status"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:gravity="center_horizontal"
+        android:orientation="vertical"
+        android:visibility="gone" >
+
+        <ProgressBar
+            style="?android:attr/progressBarStyleLarge"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp" />
+
+        <TextView
+            android:id="@+id/update_status_message"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
+            android:fontFamily="sans-serif-light"
+            android:text="@string/update_status"
+            android:textAppearance="?android:attr/textAppearanceMedium" />
+    </LinearLayout>
+<LinearLayout
+    android:id="@+id/eidtpharmform"
+            style="@style/LoginFormContainer"
+            android:orientation="vertical"
+            android:layout_width="match_parent" 
+            > 
+
+            <EditText
+                android:id="@+id/pharmacyname"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/pharmacyname"
+                android:maxLines="1"
+                android:singleLine="true" >
+
+        <requestFocus />
+    </EditText>
+
+    <EditText
+        android:id="@+id/pharmacyaddress"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/pharmacyaddress"
+        android:maxLines="1"
+        android:singleLine="true" />
+
+    <EditText
+        android:id="@+id/pharmacyemail"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/pharmacyemail"
+        android:inputType="textEmailAddress"
+        android:maxLines="1"
+        android:singleLine="true" />
+
+<EditText
+    android:id="@+id/pharmacymobile"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:hint="@string/pharmacymobile"
+    android:maxLines="1"
+    android:singleLine="true" />
+
+<CheckBox
+    android:id="@+id/pharmacylocation_check"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_alignParentLeft="true"
+    android:focusable="false"
+    android:focusableInTouchMode="false"
+    android:text="@string/currentlocation"
+    android:textColor="@color/checkBoxColor"
+    android:textSize="18sp"
+    android:textStyle="bold" />
+
+<Button
+    android:id="@+id/updatepharm"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:text="@string/updatepharm"
+    android:textColor="@color/button_color_green"
+    android:textSize="18sp"
+    android:textStyle="bold" />
+
+<Button
+    android:id="@+id/cancelpharm"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:text="@string/cancel_registration"
+   android:textSize="18sp"
+    android:textStyle="bold"
+     android:textColor="@color/button_color_red" />
+
+<RelativeLayout 
+     android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+         <TextView
+             android:id="@+id/updatepharmalert"
+             android:layout_width="wrap_content"
+             android:layout_height="wrap_content"
+             android:layout_alignParentTop="true"
+             android:layout_centerHorizontal="true"
+             android:text="@string/emptyString"
+             android:textSize="18sp"
+            android:textStyle="bold"
+             android:textColor="@color/button_color_red" />
+
+</RelativeLayout>
+
+</LinearLayout>
+</merge>
