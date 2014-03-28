@@ -274,7 +274,7 @@ public class LoginActivity extends Activity {
 								AdminApprovalActivity.class);
 					}
 				} else {
-					i = new Intent(LoginActivity.this, MainActivity.class);
+					i = new Intent(LoginActivity.this, HomePageActivity.class);
 				}
 				startActivity(i);
 				progressBarUtil.showProgress(false, this.activity);

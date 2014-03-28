@@ -63,7 +63,7 @@
         </activity>
         <activity
             android:name="com.niftyhybrid.pharmarays.EditPharmActivity"
-            android:label="@string/editpharmtitle" android:icon="@drawable/signup">
+            android:label="@string/editpharmtitle" android:icon="@drawable/modify">
         </activity>
     </application>
 
